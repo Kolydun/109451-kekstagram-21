@@ -1,7 +1,7 @@
 # Личный проект «Кекстаграм» [![Build status][travis-image]][travis-url]
 
 * Студент: [Максим](https://up.htmlacademy.ru/javascript/21/user/109451).
-* Наставник: `Неизвестно`.
+* Наставник: Юрий Белобородов.
 
 ---
 

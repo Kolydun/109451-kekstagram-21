@@ -41,15 +41,15 @@ const AVATAR_MIN = 1;
 const AVATAR_MAX = 6;
 const NAMES_MIN = 1;
 const NAMES_MAX = 13;
-let getRandomNum = function (min, max) {
-  return Math.floor(Math.random() * (max - min + 1) + min);
-};
-let pictureBlock = document.querySelector('.pictures');
-let pictureTemplate = document.querySelector('#picture').content;
-let picture = pictureTemplate.querySelector('.picture');
-let arrPhotos = generateRandomPhotos(25);
-let fragmetn = createPictureFragment(arrPhotos);
-pictureBlock.appendChild(fragmetn);
+
+main();
+
+function main() {
+  let arrPhotos = generateRandomPhotos(25);
+  let fragment = createPictureFragment(arrPhotos);
+  let pictureBlock = document.querySelector('.pictures');
+  pictureBlock.appendChild(fragment);
+}
 
 function generateRandomPhotos(number) {
   let arrPhotos = [];
@@ -99,9 +99,20 @@ function addPhotoToFragment(photo, pictureFragment) {
 }
 
 function fillPhotoTemplate(photo) {
+  let picture = getPictureTemplate();
   let pictureElement = picture.cloneNode(true);
   pictureElement.querySelector('.picture__img').src = photo.url;
   pictureElement.querySelector('.picture__likes').textContent = photo.likes;
   pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
   return pictureElement;
+}
+
+function getPictureTemplate() {
+  let pictureTemplate = document.querySelector('#picture').content;
+  let picture = pictureTemplate.querySelector('.picture');
+  return picture;
+}
+
+function getRandomNum(min, max) {
+  return Math.floor(Math.random() * (max - min + 1) + min);
 }

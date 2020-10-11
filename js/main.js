@@ -35,8 +35,8 @@ const ARR_PHOTO_DESCR = [
 ];
 const PHOTO_NUM_MAX = 25;
 const PHOTO_NUM_MIN = 1;
-const LIKES_MAX = 200;
-const LIKES_MIN = 15;
+const LIKES_NUM_MAX = 200;
+const LIKES_NUM_MIN = 15;
 const AVATAR_MIN = 1;
 const AVATAR_MAX = 6;
 const NAMES_MIN = 1;
@@ -63,7 +63,7 @@ function generateRandomPhoto() {
   return {
     url: 'photos/' + getRandomNum(PHOTO_NUM_MIN, PHOTO_NUM_MAX) + '.jpg',
     description: ARR_PHOTO_DESCR[getRandomNum(0, ARR_PHOTO_DESCR.length - 1)],
-    likes: getRandomNum(LIKES_MIN, LIKES_MAX),
+    likes: getRandomNum(LIKES_NUM_MIN, LIKES_NUM_MAX),
     comments: getRandomComments(),
   };
 }

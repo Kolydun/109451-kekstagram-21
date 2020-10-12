@@ -45,16 +45,16 @@ const NAMES_MAX = 13;
 main();
 
 function main() {
-  let arrPhotos = generateRandomPhotos(25);
-  let fragment = createPictureFragment(arrPhotos);
-  let pictureBlock = document.querySelector('.pictures');
+  const arrPhotos = generateRandomPhotos(25);
+  const fragment = createPictureFragment(arrPhotos);
+  const pictureBlock = document.querySelector('.pictures');
   pictureBlock.appendChild(fragment);
 }
 
 function generateRandomPhotos(number) {
-  let arrPhotos = [];
+  const arrPhotos = [];
   for (let i = 0; i < number; i++) {
-    arrPhotos[i] = generateRandomPhoto();
+    arrPhotos.push(generateRandomPhoto());
   }
   return arrPhotos;
 }
@@ -70,8 +70,8 @@ function generateRandomPhoto() {
 
 function getRandomComments() {
   const arrComments = [];
-  for (let j = 0; j < getRandomNum(1, 10); j++) {
-    arrComments[j] = getRandomComment();
+  for (let i = 0; i < getRandomNum(1, 10); i++) {
+    arrComments.push(getRandomComment());
   }
   return arrComments;
 }
@@ -86,7 +86,7 @@ function getRandomComment() {
 }
 
 function createPictureFragment(arrPhotos) {
-  let pictureFragment = document.createDocumentFragment();
+  const pictureFragment = document.createDocumentFragment();
   for (let i = 0; i < arrPhotos.length; i++) {
     addPhotoToFragment(arrPhotos[i], pictureFragment);
   }
@@ -94,13 +94,13 @@ function createPictureFragment(arrPhotos) {
 }
 
 function addPhotoToFragment(photo, pictureFragment) {
-  let pictureElement = fillPhotoTemplate(photo);
+  const pictureElement = fillPhotoTemplate(photo);
   pictureFragment.appendChild(pictureElement);
 }
 
 function fillPhotoTemplate(photo) {
-  let picture = getPictureTemplate();
-  let pictureElement = picture.cloneNode(true);
+  const picture = getPictureTemplate();
+  const pictureElement = picture.cloneNode(true);
   pictureElement.querySelector('.picture__img').src = photo.url;
   pictureElement.querySelector('.picture__likes').textContent = photo.likes;
   pictureElement.querySelector('.picture__comments').textContent = photo.comments.length;
@@ -108,8 +108,8 @@ function fillPhotoTemplate(photo) {
 }
 
 function getPictureTemplate() {
-  let pictureTemplate = document.querySelector('#picture').content;
-  let picture = pictureTemplate.querySelector('.picture');
+  const pictureTemplate = document.querySelector('#picture').content;
+  const picture = pictureTemplate.querySelector('.picture');
   return picture;
 }
 

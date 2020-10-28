@@ -41,12 +41,12 @@ const AVATAR_MIN = 1;
 const AVATAR_MAX = 6;
 const NAMES_MIN = 1;
 const NAMES_MAX = 13;
+const ARR_PHOTOS = generateRandomPhotos(25);
 
 main();
 
 function main() {
-  const arrPhotos = generateRandomPhotos(25);
-  const fragment = createPictureFragment(arrPhotos);
+  const fragment = createPictureFragment(ARR_PHOTOS);
   const pictureBlock = document.querySelector('.pictures');
   pictureBlock.appendChild(fragment);
 }
@@ -56,6 +56,7 @@ function generateRandomPhotos(number) {
   for (let i = 0; i < number; i++) {
     arrPhotos.push(generateRandomPhoto());
   }
+  console.log(arrPhotos);
   return arrPhotos;
 }
 
@@ -116,3 +117,147 @@ function getPictureTemplate() {
 function getRandomNum(min, max) {
   return Math.floor(Math.random() * (max - min + 1) + min);
 }
+
+// Задание 1-2
+
+const BIG_PICTURE = document.querySelector('.big-picture');
+const SOCIAL_COMMENTS = document.querySelector('.social__comments');
+const COMMENTS_COUNT = document.querySelector('.social__comment-count');
+const COMMENTS_LOADER = document.querySelector('.social__comments-loader');
+COMMENTS_COUNT.classList.add('hidden');
+COMMENTS_LOADER.classList.add('hidden');
+
+function createBigPicture(photo) {
+  const body = document.querySelector('body');
+  body.classList.add('modal-open');
+  const commentFragment = createCommentFragment(ARR_PHOTOS[0]);
+  BIG_PICTURE.querySelector('#big-photo').src = photo.url;
+  BIG_PICTURE.querySelector('.likes-count').textContent = photo.likes;
+  BIG_PICTURE.querySelector('.comments-count').textContent = photo.comments.length;
+  BIG_PICTURE.querySelector('.social__caption').textContent = photo.description;
+  createSocialComment(photo);
+  SOCIAL_COMMENTS.appendChild(commentFragment);
+  BIG_PICTURE.classList.remove('hidden');
+}
+
+function createCommentFragment(photo) {
+  const commentFragment = document.createDocumentFragment();
+  for (let i = 0; i < photo.comments.length; i++) {
+    addCommentToFragment(photo.comments[i], commentFragment);
+  }
+  return commentFragment;
+}
+
+function addCommentToFragment(comment, commentFragment) {
+  const commentElement = fillCommentTemplate(comment);
+  commentFragment.appendChild(commentElement);
+}
+
+function createSocialComment(photo) {
+  for (let i = 0; i < photo.comments.length; i++) {
+    fillCommentTemplate(photo.comments[i]);
+  }
+}
+
+function fillCommentTemplate(comment) {
+  const commentTemplate = getCommentTemplate();
+  const commentElement = commentTemplate.cloneNode(true);
+  commentElement.querySelector('.social__picture').src = comment.avatar;
+  commentElement.querySelector('.social__picture').alt = comment.name;
+  commentElement.querySelector('.social__text').textContent = comment.message;
+  return commentElement;
+}
+
+function getCommentTemplate() {
+  const commentTemplate = document.querySelector('#photo-comment').content;
+  const comment = commentTemplate.querySelector('.social__comment');
+  return comment;
+}
+
+createBigPicture(ARR_PHOTOS[0]);
+
+// Задание 2
+
+// const PHOTO_EDIT_WINDOW = document.querySelector('.img-upload__overlay');
+// const BODY_WINDOW = document.querySelector('body');
+// const FILE_UPLOAD = document.querySelector('#upload-file');
+// const UPLOAD_CLOSE = document.querySelector('#upload-cancel');
+//
+//
+// // Открытие окна редактирования фото
+// function openUploadWindow() {
+//   FILE_UPLOAD.addEventListener('change', function () {
+//     PHOTO_EDIT_WINDOW.classList.remove('hidden');
+//     BODY_WINDOW.classList.add('modal-open');
+//   });
+// }
+//
+// // Закрытие окна редактирования фото
+// function onCloseDocumentKeydown(evt) {
+//   if (evt.keyCode === 27) {
+//     uploadCloseWindow();
+//   }
+// }
+//
+// function uploadCloseWindow() {
+//   PHOTO_EDIT_WINDOW.classList.add('hidden');
+//   BODY_WINDOW.classList.remove('modal--open');
+// }
+// function closeUploadWindow() {
+//   document.addEventListener('keydown', onCloseDocumentKeydown);
+//   UPLOAD_CLOSE.addEventListener('click', uploadCloseWindow);
+// }
+//
+// openUploadWindow();
+// closeUploadWindow();
+//
+// // Валидация хэштегов
+// const HASHTAG_INPUT = document.querySelector('.text__hashtags');
+// HASHTAG_INPUT.addEventListener('focus', function () {
+//   document.removeEventListener('keydown', onCloseDocumentKeydown);
+// });
+// HASHTAG_INPUT.addEventListener('blur', function () {
+//   document.addEventListener('keydown', onCloseDocumentKeydown);
+// });
+//
+// HASHTAG_INPUT.addEventListener('input', splitHashtags);
+// const HASHTAG_RULE = /^#\w{1,19}$/;
+//
+// function arrayDuplicatesCheck(arrayElement, array) {
+//   let count = 0;
+//   for (let i = 0; i < array.length; i++) {
+//     if (arrayElement.toUpperCase() === array[i].toUpperCase()) {
+//       count++;
+//     }
+//   }
+//   return count;
+// }
+//
+// function splitHashtags(evt) {
+//   const ARR_HASHTAG_INPUTS = HASHTAG_INPUT.value.split(' ');
+//   for (let i = 0; i < ARR_HASHTAG_INPUTS.length; i++) {
+//     if (HASHTAG_RULE.test(ARR_HASHTAG_INPUTS[i]) === false) {
+//       HASHTAG_INPUT.setCustomValidity('Неправильный хэштег');
+//       evt.preventDefault();
+//       return;
+//     }
+//     if (arrayDuplicatesCheck(ARR_HASHTAG_INPUTS[i], ARR_HASHTAG_INPUTS) > 1) {
+//       HASHTAG_INPUT.setCustomValidity('Повторяющийся хэштег');
+//       evt.preventDefault();
+//       return;
+//     }
+//     if (ARR_HASHTAG_INPUTS.length > 5) {
+//       HASHTAG_INPUT.setCustomValidity('Слишком много хэштегов');
+//       evt.preventDefault();
+//       return;
+//     } else {
+//       HASHTAG_INPUT.setCustomValidity('');
+//     }
+//   }
+// }
+//
+// const PIN = document.querySelector('.effect-level__pin');
+// PIN.addEventListener('mouseup', function (evt) {
+//   evt.clientX
+// });
+

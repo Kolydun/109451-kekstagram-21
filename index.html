@@ -30,7 +30,8 @@
       <section class="img-upload">
         <div class="img-upload__wrapper">
           <h2 class="img-upload__title  visually-hidden">Загрузка фотографии</h2>
-          <form class="img-upload__form" id="upload-select-image" method="post" enctype="multipart/form-data" autocomplete="off">
+          <form class="img-upload__form" id="upload-select-image" method="post" enctype="multipart/form-data"
+              action=" https://21.javascript.pages.academy/kekstagram "  autocomplete="off">
 
             <!-- Изначальное состояние поля для загрузки изображения -->
             <fieldset class="img-upload__start">
@@ -52,7 +53,7 @@
 
                   <!-- Предварительный просмотр изображения -->
                   <div class="img-upload__preview">
-                    <img src="img/upload-default-image.jpg" alt="Предварительный просмотр фотографии">
+                    <img src="img/upload-default-image.jpg" alt="Предварительный просмотр фотографии" id="photo-prev">
                   </div>
 
                   <!-- Изменение глубины эффекта, накладываемого на изображение -->
@@ -119,7 +120,8 @@
                 <!-- Добавление хэш-тегов и комментария к изображению -->
                 <fieldset class="img-upload__text text">
                   <input class="text__hashtags" name="hashtags" placeholder="#ХэшТег">
-                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..."></textarea>
+                  <textarea class="text__description" name="description" placeholder="Ваш комментарий..." maxlength="140">
+                  </textarea>
                 </fieldset>
 
                 <!-- Кнопка для отправки данных на сервер -->
@@ -141,7 +143,7 @@
 
         <!-- Просмотр изображения -->
         <div class="big-picture__img">
-          <img src="img/logo-background-3.jpg" alt="Девушка в купальнике" width="600" height="600">
+          <img src="img/logo-background-3.jpg" alt="Девушка в купальнике" width="600" height="600" id="big-photo">
         </div>
 
         <!-- Информация об изображении. Подпись, комментарии, количество лайков -->
@@ -155,14 +157,14 @@
           <!-- Комментарии к изображению -->
           <div class="social__comment-count">5 из <span class="comments-count">125</span> комментариев</div>
           <ul class="social__comments">
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-              <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>
-            </li>
-            <li class="social__comment">
-              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">
-               <p class="social__text">Да это фоташоп!!!!!!!!</p>
-            </li>
+<!--            <li class="social__comment">-->
+<!--              <img class="social__picture" src="img/avatar-4.svg" alt="Аватар комментатора фотографии" width="35" height="35">-->
+<!--              <p class="social__text">Мега фото! Просто обалдеть. Как вам так удалось?</p>-->
+<!--            </li>-->
+<!--            <li class="social__comment">-->
+<!--              <img class="social__picture" src="img/avatar-3.svg" alt="Аватар комментатора фотографии" width="35" height="35">-->
+<!--               <p class="social__text">Да это фоташоп!!!!!!!!</p>-->
+<!--            </li>-->
           </ul>
 
           <!-- Кнопка для загрузки новой порции комментариев -->
@@ -233,6 +235,12 @@
     <div class="img-upload__message  img-upload__message--loading">Загружаем...</div>
   </template>
 
+   <template id="photo-comment">
+     <li class="social__comment" id="social-comment">
+       <img class="social__picture" src="" alt="" width="35" height="35" id="-user-avatar">
+       <p class="social__text" id="social-text-content"></p>
+     </li>
+   </template>
 <script src="js/main.js"></script>
 </body>
 </html>

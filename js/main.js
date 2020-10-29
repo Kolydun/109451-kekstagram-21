@@ -121,7 +121,6 @@ function getRandomNum(min, max) {
 // Задание 1-2
 
 const BIG_PICTURE = document.querySelector('.big-picture');
-const SOCIAL_COMMENTS = document.querySelector('.social__comments');
 const COMMENTS_COUNT = document.querySelector('.social__comment-count');
 const COMMENTS_LOADER = document.querySelector('.social__comments-loader');
 COMMENTS_COUNT.classList.add('hidden');
@@ -130,48 +129,31 @@ COMMENTS_LOADER.classList.add('hidden');
 function createBigPicture(photo) {
   const body = document.querySelector('body');
   body.classList.add('modal-open');
-  const commentFragment = createCommentFragment(ARR_PHOTOS[0]);
   BIG_PICTURE.querySelector('#big-photo').src = photo.url;
   BIG_PICTURE.querySelector('.likes-count').textContent = photo.likes;
   BIG_PICTURE.querySelector('.comments-count').textContent = photo.comments.length;
   BIG_PICTURE.querySelector('.social__caption').textContent = photo.description;
-  createSocialComment(photo);
-  SOCIAL_COMMENTS.appendChild(commentFragment);
+  BIG_PICTURE.querySelector('.social__comments').appendChild(createCommentFragment(photo));
   BIG_PICTURE.classList.remove('hidden');
 }
 
 function createCommentFragment(photo) {
   const commentFragment = document.createDocumentFragment();
-  for (let i = 0; i < photo.comments.length; i++) {
-    addCommentToFragment(photo.comments[i], commentFragment);
-  }
+  photo.comments.forEach((comment) => {
+    const commentElement = fillCommentTemplate(comment);
+    commentFragment.appendChild(commentElement);
+  });
   return commentFragment;
 }
 
-function addCommentToFragment(comment, commentFragment) {
-  const commentElement = fillCommentTemplate(comment);
-  commentFragment.appendChild(commentElement);
-}
-
-function createSocialComment(photo) {
-  for (let i = 0; i < photo.comments.length; i++) {
-    fillCommentTemplate(photo.comments[i]);
-  }
-}
-
 function fillCommentTemplate(comment) {
-  const commentTemplate = getCommentTemplate();
+  const commentTemplate = document.querySelector('#photo-comment').content
+    .querySelector('.social__comment');
   const commentElement = commentTemplate.cloneNode(true);
   commentElement.querySelector('.social__picture').src = comment.avatar;
   commentElement.querySelector('.social__picture').alt = comment.name;
   commentElement.querySelector('.social__text').textContent = comment.message;
   return commentElement;
-}
-
-function getCommentTemplate() {
-  const commentTemplate = document.querySelector('#photo-comment').content;
-  const comment = commentTemplate.querySelector('.social__comment');
-  return comment;
 }
 
 createBigPicture(ARR_PHOTOS[0]);

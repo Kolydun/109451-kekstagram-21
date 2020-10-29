@@ -56,7 +56,6 @@ function generateRandomPhotos(number) {
   for (let i = 0; i < number; i++) {
     arrPhotos.push(generateRandomPhoto());
   }
-  console.log(arrPhotos);
   return arrPhotos;
 }
 
@@ -120,21 +119,25 @@ function getRandomNum(min, max) {
 
 // Задание 1-2
 
-const BIG_PICTURE = document.querySelector('.big-picture');
-const COMMENTS_COUNT = document.querySelector('.social__comment-count');
-const COMMENTS_LOADER = document.querySelector('.social__comments-loader');
-COMMENTS_COUNT.classList.add('hidden');
-COMMENTS_LOADER.classList.add('hidden');
+const bigPicture = document.querySelector('.big-picture');
 
 function createBigPicture(photo) {
   const body = document.querySelector('body');
   body.classList.add('modal-open');
-  BIG_PICTURE.querySelector('#big-photo').src = photo.url;
-  BIG_PICTURE.querySelector('.likes-count').textContent = photo.likes;
-  BIG_PICTURE.querySelector('.comments-count').textContent = photo.comments.length;
-  BIG_PICTURE.querySelector('.social__caption').textContent = photo.description;
-  BIG_PICTURE.querySelector('.social__comments').appendChild(createCommentFragment(photo));
-  BIG_PICTURE.classList.remove('hidden');
+  bigPicture.querySelector('#big-photo').src = photo.url;
+  bigPicture.querySelector('.likes-count').textContent = photo.likes;
+  bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
+  bigPicture.querySelector('.social__caption').textContent = photo.description;
+  bigPicture.querySelector('.social__comments').appendChild(createCommentFragment(photo));
+  bigPicture.classList.remove('hidden');
+  hideElements();
+}
+
+function hideElements() {
+  const commentCount = document.querySelector('.social__comment-count');
+  const commentLoader = document.querySelector('.social__comments-loader');
+  commentCount.classList.add('hidden');
+  commentLoader.classList.add('hidden');
 }
 
 function createCommentFragment(photo) {

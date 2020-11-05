@@ -162,83 +162,83 @@ function fillCommentTemplate(comment) {
 createBigPicture(ARR_PHOTOS[0]);
 
 // Задание 2
-
-const photoEditWindow = document.querySelector('.img-upload__overlay');
+const KEYCODE_ESC = 27;
+const MAX_NUMBER_OF_HASHTAGS = 5;
+const imageUploadForm = document.querySelector('.img-upload__form');
+const photoEditWindow = imageUploadForm.querySelector('.img-upload__overlay');
 const bodyWindow = document.querySelector('body');
-const fileUpload = document.querySelector('#upload-file');
-const uploadClose = document.querySelector('#upload-cancel');
-
+const fileUpload = imageUploadForm.querySelector('#upload-file');
+const uploadClose = imageUploadForm.querySelector('#upload-cancel');
 
 // Открытие окна редактирования фото
-function openUploadWindow() {
-  fileUpload.addEventListener('change', function () {
-    photoEditWindow.classList.remove('hidden');
-    bodyWindow.classList.add('modal-open');
-  });
+function onFileUploadChange() {
+  photoEditWindow.classList.remove('hidden');
+  bodyWindow.classList.add('modal-open');
 }
 
 // Закрытие окна редактирования фото
-function onCloseDocumentKeydown(evt) {
-  if (evt.keyCode === 27) {
-    uploadCloseWindow();
+function onDocumentKeydown(evt) {
+  if (evt.keyCode === KEYCODE_ESC) {
+    closeUploadWindow();
   }
 }
 
-function uploadCloseWindow() {
+function closeUploadWindow() {
   photoEditWindow.classList.add('hidden');
   bodyWindow.classList.remove('modal--open');
 }
-function closeUploadWindow() {
-  document.addEventListener('keydown', onCloseDocumentKeydown);
-  uploadClose.addEventListener('click', uploadCloseWindow);
+function uploadWindowAddListeners() {
+  document.addEventListener('keydown', onDocumentKeydown);
+  uploadClose.addEventListener('click', closeUploadWindow);
+  fileUpload.addEventListener('change', onFileUploadChange);
 }
-
-openUploadWindow();
-closeUploadWindow();
+uploadWindowAddListeners();
 
 // Валидация хэштегов
 const hashtagInput = document.querySelector('.text__hashtags');
 const HASHTAG_RULES = /^#\w{1,19}$/;
 
-hashtagInput.addEventListener('focus', function () {
-  document.removeEventListener('keydown', onCloseDocumentKeydown);
-});
-hashtagInput.addEventListener('blur', function () {
-  document.addEventListener('keydown', onCloseDocumentKeydown);
-});
-hashtagInput.addEventListener('input', splitHashtags);
-
-function arrayDuplicatesCheck(arrayElement, array) {
-  let count = 0;
-  for (let i = 0; i < array.length; i++) {
-    if (arrayElement.toUpperCase() === array[i].toUpperCase()) {
-      count++;
+function preventInvalidFormSubmit() {
+  imageUploadForm.addEventListener('submit', function (evt) {
+    if (imageUploadForm.checkValidity === false) {
+      evt.preventDefault();
     }
-  }
-  return count;
+  });
+}
+function hashtagInputAddListeners() {
+  hashtagInput.addEventListener('focus', function () {
+    document.removeEventListener('keydown', onDocumentKeydown);
+  });
+  hashtagInput.addEventListener('blur', function () {
+    document.addEventListener('keydown', onDocumentKeydown);
+  });
+  hashtagInput.addEventListener('input', onHashtagsInput);
 }
 
-function splitHashtags(evt) {
-  const arrHashtagInputs = hashtagInput.value.split(' ');
+function onHashtagsInput() {
+  const arrHashtagInputs = hashtagInput.value.toUpperCase().split(' ');
+  const isDuplicatesInArray = arrHashtagInputs.every(function (item, index, array) {
+    return array.indexOf(item) === index;
+  });
   for (let i = 0; i < arrHashtagInputs.length; i++) {
     if (HASHTAG_RULES.test(arrHashtagInputs[i]) === false) {
       hashtagInput.setCustomValidity('Неправильный хэштег');
-      evt.preventDefault();
       return;
     }
-    if (arrayDuplicatesCheck(arrHashtagInputs[i], arrHashtagInputs) > 1) {
+    if (isDuplicatesInArray === false) {
       hashtagInput.setCustomValidity('Повторяющийся хэштег');
-      evt.preventDefault();
       return;
     }
-    if (arrHashtagInputs.length > 5) {
+    if (arrHashtagInputs.length > MAX_NUMBER_OF_HASHTAGS) {
       hashtagInput.setCustomValidity('Слишком много хэштегов');
-      evt.preventDefault();
       return;
     } else {
       hashtagInput.setCustomValidity('');
     }
   }
 }
+
+preventInvalidFormSubmit();
+hashtagInputAddListeners();
 
 

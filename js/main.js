@@ -220,19 +220,22 @@ function onHashtagsInput() {
   const isDuplicatesInArray = arrHashtagInputs.every(function (item, index, array) {
     return array.indexOf(item) === index;
   });
-  for (let i = 0; i < arrHashtagInputs.length; i++) {
-    if (HASHTAG_RULES.test(arrHashtagInputs[i]) === false) {
-      hashtagInput.setCustomValidity('Неправильный хэштег');
-      return;
-    }
-    if (isDuplicatesInArray === false) {
-      hashtagInput.setCustomValidity('Повторяющийся хэштег');
-      return;
-    }
-    if (arrHashtagInputs.length > MAX_NUMBER_OF_HASHTAGS) {
-      hashtagInput.setCustomValidity('Слишком много хэштегов');
-      return;
-    } else {
+  if (isDuplicatesInArray === false) {
+    hashtagInput.setCustomValidity('Повторяющийся хэштег');
+    return;
+  } else {
+    for (let i = 0; i < arrHashtagInputs.length; i++) {
+      if (arrHashtagInputs[i] !== '') {
+        if (HASHTAG_RULES.test(arrHashtagInputs[i]) === false) {
+          hashtagInput.setCustomValidity('Неправильный хэштег');
+          return;
+        }
+        if (arrHashtagInputs.length > MAX_NUMBER_OF_HASHTAGS) {
+          hashtagInput.setCustomValidity('Слишком много хэштегов');
+          return;
+        }
+        hashtagInput.setCustomValidity('');
+      }
       hashtagInput.setCustomValidity('');
     }
   }

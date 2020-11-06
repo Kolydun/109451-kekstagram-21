@@ -179,17 +179,17 @@ function onFileUploadChange() {
 // Закрытие окна редактирования фото
 function onDocumentKeydown(evt) {
   if (evt.keyCode === KEYCODE_ESC) {
-    closeUploadWindow();
+    onUploadCloseClick();
   }
 }
 
-function closeUploadWindow() {
+function onUploadCloseClick() {
   photoEditWindow.classList.add('hidden');
   bodyWindow.classList.remove('modal--open');
 }
 function uploadWindowAddListeners() {
   document.addEventListener('keydown', onDocumentKeydown);
-  uploadClose.addEventListener('click', closeUploadWindow);
+  uploadClose.addEventListener('click', onUploadCloseClick);
   fileUpload.addEventListener('change', onFileUploadChange);
 }
 uploadWindowAddListeners();
@@ -217,26 +217,23 @@ function hashtagInputAddListeners() {
 
 function onHashtagsInput() {
   const arrHashtagInputs = hashtagInput.value.toUpperCase().split(' ');
-  const isDuplicatesInArray = arrHashtagInputs.every(function (item, index, array) {
+  const arrFilteredHashtagInputs = arrHashtagInputs.filter(function (element) {
+    return element !== '';
+  });
+  const isDuplicatesInArray = arrFilteredHashtagInputs.every(function (item, index, array) {
     return array.indexOf(item) === index;
   });
-  if (isDuplicatesInArray === false) {
+  hashtagInput.setCustomValidity('');
+  if (arrFilteredHashtagInputs.length > MAX_NUMBER_OF_HASHTAGS) {
+    hashtagInput.setCustomValidity('Слишком много хэштегов');
+  } else if (!isDuplicatesInArray) {
     hashtagInput.setCustomValidity('Повторяющийся хэштег');
-    return;
   } else {
-    for (let i = 0; i < arrHashtagInputs.length; i++) {
-      if (arrHashtagInputs[i] !== '') {
-        if (HASHTAG_RULES.test(arrHashtagInputs[i]) === false) {
-          hashtagInput.setCustomValidity('Неправильный хэштег');
-          return;
-        }
-        if (arrHashtagInputs.length > MAX_NUMBER_OF_HASHTAGS) {
-          hashtagInput.setCustomValidity('Слишком много хэштегов');
-          return;
-        }
-        hashtagInput.setCustomValidity('');
+    for (let i = 0; i < arrFilteredHashtagInputs.length; i++) {
+      if (HASHTAG_RULES.test(arrFilteredHashtagInputs[i]) === false) {
+        hashtagInput.setCustomValidity('Неправильный хэштег');
+        break;
       }
-      hashtagInput.setCustomValidity('');
     }
   }
 }

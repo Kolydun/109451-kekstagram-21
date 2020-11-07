@@ -121,15 +121,23 @@ function getRandomNum(min, max) {
 
 const bigPicture = document.querySelector('.big-picture');
 
+function removeComments() {
+  const commentsList = bigPicture.querySelector('.social__comments');
+  let lastComment = commentsList.lastElementChild;
+  while (lastComment) {
+    commentsList.removeChild(lastComment);
+    lastComment = commentsList.lastElementChild;
+  }
+}
+
 function createBigPicture(photo) {
-  const body = document.querySelector('body');
-  body.classList.add('modal-open');
+  const commentsList = bigPicture.querySelector('.social__comments');
   bigPicture.querySelector('#big-photo').src = photo.url;
   bigPicture.querySelector('.likes-count').textContent = photo.likes;
   bigPicture.querySelector('.comments-count').textContent = photo.comments.length;
   bigPicture.querySelector('.social__caption').textContent = photo.description;
-  bigPicture.querySelector('.social__comments').appendChild(createCommentFragment(photo));
-  // bigPicture.classList.remove('hidden');
+  removeComments();
+  commentsList.appendChild(createCommentFragment(photo));
   hideElements();
 }
 
@@ -159,7 +167,47 @@ function fillCommentTemplate(comment) {
   return commentElement;
 }
 
-createBigPicture(ARR_PHOTOS[0]);
+// createBigPicture(ARR_PHOTOS[0]);
+
+// Задание 2-2
+const smallPicturesBlock = document.querySelector('.pictures');
+const smallPictures = smallPicturesBlock.querySelectorAll('.picture');
+const body = document.querySelector('body');
+const bigPictureClose = document.querySelector('.big-picture__cancel');
+const KEYCODE_ENTER = 27;
+
+function onSmallPictureClick() {
+  body.classList.add('modal-open');
+  bigPicture.classList.remove('hidden');
+}
+
+function onBigPictureCloseClick() {
+  body.classList.remove('modal-open');
+  bigPicture.classList.add('hidden');
+}
+
+function smallPictureAddListeners() {
+  for (let i = 0; i < smallPictures.length; i++) {
+    smallPictures[i].addEventListener('click', function () {
+      createBigPicture(ARR_PHOTOS[i]);
+      onSmallPictureClick();
+    });
+    smallPictures[i].addEventListener('keydown', function (evt) {
+      if (evt.keyCode === KEYCODE_ENTER) {
+        onBigPictureCloseClick();
+      }
+    });
+  }
+  document.addEventListener('keydown', function (evt) {
+    if (evt.keyCode === KEYCODE_ESC) {
+      onBigPictureCloseClick();
+    }
+  });
+}
+
+bigPictureClose.addEventListener('click', onBigPictureCloseClick);
+
+smallPictureAddListeners();
 
 // Задание 2
 const KEYCODE_ESC = 27;
@@ -242,3 +290,26 @@ preventInvalidFormSubmit();
 hashtagInputAddListeners();
 
 
+// Валидация комментариев
+const commentInput = document.querySelector('.text__description');
+
+function commentInputAddListeners() {
+  commentInput.addEventListener('focus', function () {
+    document.removeEventListener('keydown', onDocumentKeydown);
+  });
+  commentInput.addEventListener('blur', function () {
+    document.addEventListener('keydown', onDocumentKeydown);
+  });
+  commentInput.addEventListener('input', onCommentsInput);
+}
+
+function onCommentsInput() {
+  if (commentInput.value.length >= 120) {
+    commentInput.setCustomValidity('Слишком длинный комментарий');
+    return;
+  } else {
+    commentInput.setCustomValidity('');
+  }
+}
+
+commentInputAddListeners();

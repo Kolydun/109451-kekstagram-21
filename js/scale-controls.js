@@ -13,7 +13,7 @@
 
   function scaleUp(check) {
     if (scaleValue.value !== check) {
-      let newScale = parseInt(scaleValue.value) + scaleChangeStep;
+      let newScale = parseInt(scaleValue.value, 10) + scaleChangeStep;
       photoPreview.style.transform = 'scale(' + newScale / DIVIDER + ')';
       newScale.toString();
       scaleValue.value = newScale + '%';
@@ -21,7 +21,7 @@
   }
   function scaleDown(check) {
     if (scaleValue.value !== check) {
-      let newScale = parseInt(scaleValue.value) - scaleChangeStep;
+      let newScale = parseInt(scaleValue.value, 10) - scaleChangeStep;
       photoPreview.style.transform = 'scale(' + newScale / DIVIDER + ')';
       newScale.toString();
       scaleValue.value = newScale + '%';

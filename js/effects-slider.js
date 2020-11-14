@@ -5,9 +5,11 @@
   const effectLevelInput = effectLevel.querySelector(".effect-level__value");
   const effectLevelPin = effectLevel.querySelector('.effect-level__pin');
   const effectDepthLevel = effectLevel.querySelector('.effect-level__depth');
+  const ZERO = 0;
+  const ROUNDER = 100;
 
   function ratioCalc(ratio) {
-    const result = ratio * 100;
+    const result = ratio * ROUNDER;
     return result;
   }
 
@@ -27,8 +29,8 @@
       const pressedX = currentPositionX - moveEvent.clientX;
       let pinMovementX = evt.target.offsetLeft - pressedX;
 
-      if (pinMovementX < 0) {
-        pinMovementX = 0;
+      if (pinMovementX < ZERO) {
+        pinMovementX = ZERO;
       }
 
       if (pinMovementX > levelLineWidth) {

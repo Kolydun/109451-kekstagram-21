@@ -25,7 +25,7 @@
   }
 
   function showBigPicture(element) {
-    var smallPhotoIndex = element.dataset.index;
+    const smallPhotoIndex = element.dataset.index;
     window.bigPictureCreate.bigTemplateFill(window.gallery.ARR_PHOTOS[smallPhotoIndex]);
     openBigPicture();
     document.addEventListener('keydown', onEscKeydown);
@@ -38,7 +38,7 @@
   }
 
   function onSmallPictureClick(evt) {
-    var clickedPicture = evt.target;
+    const clickedPicture = evt.target;
     if (clickedPicture.matches('img')) {
       showBigPicture(evt.target.parentElement);
     }

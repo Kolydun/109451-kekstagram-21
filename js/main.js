@@ -209,7 +209,7 @@
 // }
 //
 // function onSmallPictureClick(evt) {
-//   var clickedPicture = evt.target;
+//   const clickedPicture = evt.target;
 //   if (clickedPicture.matches('img')) {
 //     showBigPicture(evt.target.parentElement);
 //   }

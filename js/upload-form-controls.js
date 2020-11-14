@@ -18,11 +18,14 @@
   const bodyWindow = document.querySelector('body');
   const fileUpload = window.form.imageUploadForm.querySelector('#upload-file');
   const uploadClose = window.form.imageUploadForm.querySelector('#upload-cancel');
+  const effectLevel = window.form.imageUploadForm.querySelector('.img-upload__effect-level');
 
   // Открытие окна редактирования фото
   function onFileUploadChange() {
     photoEditWindow.classList.remove('hidden');
     bodyWindow.classList.add('modal-open');
+    effectLevel.classList.add('hidden');
+
   }
 
   // Закрытие окна редактирования фото

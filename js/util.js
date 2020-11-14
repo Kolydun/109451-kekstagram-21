@@ -6,6 +6,10 @@
       return Math.floor(Math.random() * (max - min + 1) + min);
     },
     KEYCODE_ENTER: 13,
-    KEYCODE_ESC: 27
+    KEYCODE_ESC: 27,
+    defaultScale: function (photo, scaleElement) {
+      photo.style.transform = 'scale(1)';
+      scaleElement.value = '100%';
+    }
   };
 })();

@@ -12,8 +12,8 @@
   const BRIGHTNESS_MAX = 3;
   const BRIGHTNESS_MIN = 1;
   const DIVIDER = 100;
-  let chosenEffect = '';
-  window.effectTypes = {
+  const RESET_VALUE = 100;
+  const effectTypes = {
     Original: effectsList.querySelector('#effect-none'),
     Chrome: effectsList.querySelector('#effect-chrome'),
     Sepia: effectsList.querySelector('#effect-sepia'),
@@ -21,19 +21,20 @@
     Phobos: effectsList.querySelector('#effect-phobos'),
     Heat: effectsList.querySelector('#effect-heat')
   };
+  let chosenEffect = '';
   window.onEffectTypeClick = {
     filterChange: function () {
-      if (chosenEffect === window.effectTypes.Original.id) {
+      if (chosenEffect === effectTypes.Original.id) {
         photoPreview.style.filter = 'none';
-      } else if (chosenEffect === window.effectTypes.Chrome.id) {
+      } else if (chosenEffect === effectTypes.Chrome.id) {
         filterIntensivityCalc('grayscale(' + effectLevelInput.value / DIVIDER + ')');
-      } else if (chosenEffect === window.effectTypes.Sepia.id) {
+      } else if (chosenEffect === effectTypes.Sepia.id) {
         filterIntensivityCalc('sepia(' + effectLevelInput.value / DIVIDER + ')');
-      } else if (chosenEffect === window.effectTypes.Marvin.id) {
+      } else if (chosenEffect === effectTypes.Marvin.id) {
         filterIntensivityCalc('invert(' + effectLevelInput.value + "%" + ')');
-      } else if (chosenEffect === window.effectTypes.Phobos.id) {
+      } else if (chosenEffect === effectTypes.Phobos.id) {
         filterIntensivityCalc('blur(' + ((BLUR_MAX - BLUR_MIN) / DIVIDER * effectLevelInput.value) + 'px)');
-      } else if (chosenEffect === window.effectTypes.Heat.id) {
+      } else if (chosenEffect === effectTypes.Heat.id) {
         filterIntensivityCalc('brightness(' + (BRIGHTNESS_MIN + ((BRIGHTNESS_MAX - BRIGHTNESS_MIN) / DIVIDER * effectLevelInput.value)) + ')');
       }
     }
@@ -44,10 +45,10 @@
   }
 
   function filtersReset() {
-    effectLevelPin.style.left = 0 + '%';
-    effectDepthLevel.style.width = 0 + '%';
-    effectLevelInput.value = 0;
-    photoPreview.style.filter = 'none';
+    effectLevelPin.style.left = RESET_VALUE + '%';
+    effectDepthLevel.style.width = RESET_VALUE + '%';
+    effectLevelInput.value = RESET_VALUE;
+    photoPreview.style.filter = window.onEffectTypeClick.filterChange();
   }
 
   effectsList.addEventListener('change', function (evt) {
@@ -56,7 +57,7 @@
     if (effectLevel.classList.contains('hidden')) {
       effectLevel.classList.remove('hidden');
     }
-    if (chosenEffect === window.effectTypes.Original.id) {
+    if (chosenEffect === effectTypes.Original.id) {
       effectLevel.classList.add('hidden');
     }
     filtersReset();

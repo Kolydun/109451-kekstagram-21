@@ -19,13 +19,15 @@
   const fileUpload = window.form.imageUploadForm.querySelector('#upload-file');
   const uploadClose = window.form.imageUploadForm.querySelector('#upload-cancel');
   const effectLevel = window.form.imageUploadForm.querySelector('.img-upload__effect-level');
+  const scaleValue = window.form.imageUploadForm.querySelector('.scale__control--value');
+  const photoPreview = window.form.imageUploadForm.querySelector('#photo-prev');
 
   // Открытие окна редактирования фото
   function onFileUploadChange() {
     photoEditWindow.classList.remove('hidden');
     bodyWindow.classList.add('modal-open');
     effectLevel.classList.add('hidden');
-
+    window.util.defaultScale(photoPreview, scaleValue);
   }
 
   // Закрытие окна редактирования фото

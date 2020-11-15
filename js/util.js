@@ -7,9 +7,5 @@
     },
     KEYCODE_ENTER: 13,
     KEYCODE_ESC: 27,
-    defaultScale: function (photo, scaleElement) {
-      photo.style.transform = 'scale(1)';
-      scaleElement.value = '100%';
-    }
   };
 })();

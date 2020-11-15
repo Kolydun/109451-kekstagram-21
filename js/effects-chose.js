@@ -14,27 +14,27 @@
   const DIVIDER = 100;
   const RESET_VALUE = 100;
   const effectTypes = {
-    Original: effectsList.querySelector('#effect-none'),
-    Chrome: effectsList.querySelector('#effect-chrome'),
-    Sepia: effectsList.querySelector('#effect-sepia'),
-    Marvin: effectsList.querySelector('#effect-marvin'),
-    Phobos: effectsList.querySelector('#effect-phobos'),
-    Heat: effectsList.querySelector('#effect-heat')
+    ORIGINAL: effectsList.querySelector('#effect-none'),
+    CHROME: effectsList.querySelector('#effect-chrome'),
+    SEPIA: effectsList.querySelector('#effect-sepia'),
+    MARVIN: effectsList.querySelector('#effect-marvin'),
+    PHOBOS: effectsList.querySelector('#effect-phobos'),
+    HEAT: effectsList.querySelector('#effect-heat')
   };
   let chosenEffect = '';
-  window.onEffectTypeClick = {
-    filterChange: function () {
-      if (chosenEffect === effectTypes.Original.id) {
+  window.effectChose = {
+    onFilterTypeClick: function () {
+      if (chosenEffect === effectTypes.ORIGINAL.id) {
         photoPreview.style.filter = 'none';
-      } else if (chosenEffect === effectTypes.Chrome.id) {
+      } else if (chosenEffect === effectTypes.CHROME.id) {
         filterIntensivityCalc('grayscale(' + effectLevelInput.value / DIVIDER + ')');
-      } else if (chosenEffect === effectTypes.Sepia.id) {
+      } else if (chosenEffect === effectTypes.SEPIA.id) {
         filterIntensivityCalc('sepia(' + effectLevelInput.value / DIVIDER + ')');
-      } else if (chosenEffect === effectTypes.Marvin.id) {
+      } else if (chosenEffect === effectTypes.MARVIN.id) {
         filterIntensivityCalc('invert(' + effectLevelInput.value + "%" + ')');
-      } else if (chosenEffect === effectTypes.Phobos.id) {
+      } else if (chosenEffect === effectTypes.PHOBOS.id) {
         filterIntensivityCalc('blur(' + ((BLUR_MAX - BLUR_MIN) / DIVIDER * effectLevelInput.value) + 'px)');
-      } else if (chosenEffect === effectTypes.Heat.id) {
+      } else if (chosenEffect === effectTypes.HEAT.id) {
         filterIntensivityCalc('brightness(' + (BRIGHTNESS_MIN + ((BRIGHTNESS_MAX - BRIGHTNESS_MIN) / DIVIDER * effectLevelInput.value)) + ')');
       }
     }
@@ -48,16 +48,16 @@
     effectLevelPin.style.left = RESET_VALUE + '%';
     effectDepthLevel.style.width = RESET_VALUE + '%';
     effectLevelInput.value = RESET_VALUE;
-    photoPreview.style.filter = window.onEffectTypeClick.filterChange();
+    photoPreview.style.filter = window.effectChose.onFilterTypeClick();
   }
 
   effectsList.addEventListener('change', function (evt) {
     chosenEffect = evt.target.id;
-    window.onEffectTypeClick.filterChange();
+    window.effectChose.onFilterTypeClick();
     if (effectLevel.classList.contains('hidden')) {
       effectLevel.classList.remove('hidden');
     }
-    if (chosenEffect === effectTypes.Original.id) {
+    if (chosenEffect === effectTypes.ORIGINAL.id) {
       effectLevel.classList.add('hidden');
     }
     filtersReset();

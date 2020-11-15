@@ -17,7 +17,7 @@
     effectLevelPin.style.left = ratioCalc(ratio) + "%";
     effectDepthLevel.style.width = ratioCalc(ratio) + "%";
     effectLevelInput.value = Math.round(ratioCalc(ratio));
-    window.onEffectTypeClick.filterChange();
+    window.effectChose.onFilterTypeClick();
   }
 
   function onPinMousedown(evt) {

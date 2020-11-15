@@ -27,7 +27,7 @@
     photoEditWindow.classList.remove('hidden');
     bodyWindow.classList.add('modal-open');
     effectLevel.classList.add('hidden');
-    window.util.defaultScale(photoPreview, scaleValue);
+    defaultScale(photoPreview, scaleValue);
   }
 
   // Закрытие окна редактирования фото
@@ -40,6 +40,11 @@
     document.addEventListener('keydown', window.form.onDocumentKeydown);
     uploadClose.addEventListener('click', onUploadCloseClick);
     fileUpload.addEventListener('change', onFileUploadChange);
+  }
+
+  function defaultScale(photo, scaleElement) {
+    photo.style.transform = 'scale(1)';
+    scaleElement.value = '100%';
   }
 
   uploadWindowAddListeners();

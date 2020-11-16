@@ -42,6 +42,16 @@
   const NAMES_MIN = 1;
   const NAMES_MAX = 13;
 
+  // window.data = {
+  //   generateRandomPhotos: function (number) {
+  //     const arrPhotos = [];
+  //     for (let i = 0; i < number; i++) {
+  //       arrPhotos.push(generateRandomPhoto(i));
+  //     }
+  //     return arrPhotos;
+  //   }
+  // };
+
   window.data = {
     generateRandomPhotos: function (number) {
       const arrPhotos = [];
@@ -78,4 +88,5 @@
         + ARR_COMMENT_PARTS[window.util.getRandomNum(0, ARR_COMMENT_PARTS.length - 1)],
     };
   }
+
 })();

@@ -15,22 +15,6 @@
     window.bigPictureCreate.bigPicture.classList.add('hidden');
   }
 
-  function onPictureEnterKeydown(evt) {
-    if (evt.keyCode === window.util.KEYCODE_ENTER) {
-      var clickedPicture = evt.target;
-      if (clickedPicture.matches('a')) {
-        showBigPicture(evt.target);
-      }
-    }
-  }
-
-  function showBigPicture(element) {
-    const smallPhotoIndex = element.dataset.index;
-    window.bigPictureCreate.bigTemplateFill(window.gallery.ARR_PHOTOS[smallPhotoIndex]);
-    openBigPicture();
-    document.addEventListener('keydown', onEscKeydown);
-  }
-
   function onEscKeydown(evt) {
     if (evt.keyCode === window.util.KEYCODE_ESC) {
       onBigPictureCloseClick();
@@ -38,13 +22,17 @@
   }
 
   function onSmallPictureClick(evt) {
-    const clickedPicture = evt.target;
-    if (clickedPicture.matches('img')) {
-      showBigPicture(evt.target.parentElement);
+    if (evt.target.closest('.picture') !== null) {
+      const clickedPictureIndex = evt.target.closest('.picture').dataset.index;
+      const clickedPictureObject = window.data.find(function (photo) {
+        return photo.index === parseInt(clickedPictureIndex, 10);
+      });
+      window.bigPictureCreate.bigTemplateFill(clickedPictureObject);
+      openBigPicture();
+      document.addEventListener('keydown', onEscKeydown);
     }
   }
 
   bigPictureClose.addEventListener('click', onBigPictureCloseClick);
   smallPicturesBlock.addEventListener('click', onSmallPictureClick);
-  smallPicturesBlock.addEventListener('keydown', onPictureEnterKeydown);
 })();

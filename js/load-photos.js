@@ -2,7 +2,7 @@
 
 (function () {
   const URL = 'https://21.javascript.pages.academy/kekstagram/data';
-  window.load = function (onSuccess, onError) {
+  window.load = function (onSuccess) {
     const xhrRequest = new XMLHttpRequest();
     xhrRequest.responseType = 'json';
 

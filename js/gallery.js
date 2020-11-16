@@ -6,7 +6,6 @@
     const fragment = createPictureFragment(data);
     const pictureBlock = document.querySelector('.pictures');
     pictureBlock.appendChild(fragment);
-    console.log(data);
   }
 
   function onLoadPictures(data) {
